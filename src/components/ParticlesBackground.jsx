@@ -100,10 +100,19 @@ const Particles = ({
 
     const renderer = new Renderer({ depth: false, alpha: true });
     const gl = renderer.gl;
+
+    gl.canvas.style.position = "absolute";
+    gl.canvas.style.top = "0";
+    gl.canvas.style.left = "0";
+    gl.canvas.style.width = "100%";
+    gl.canvas.style.height = "100%";
+    gl.canvas.style.zIndex = "0";
+    gl.canvas.style.pointerEvents = "none";
+
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);
 
-    const camera = new Camera(gl, { fov: 15 });
+    const camera = new Camera(gl, { fov: 10 });
     camera.position.set(0, 0, cameraDistance);
 
     const resize = () => {

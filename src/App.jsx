@@ -9,6 +9,30 @@ export default function App() {
   const [hasMounted, setHasMounted] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
+
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const handleTouchStart = (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchEndX - touchStartX;
+
+    if (deltaX > 50) {
+      // Swipe right
+      setIndex((i) => Math.max(0, i - 1));
+    } else if (deltaX < -50) {
+      // Swipe left
+      setIndex((i) => Math.min(1, i + 1));
+    }
+  };
+
+
+
   useEffect(() => {
     const navEntry = performance.getEntriesByType("navigation")[0];
     const should = navEntry?.type === "reload" || navEntry?.type === "navigate";
@@ -37,7 +61,13 @@ export default function App() {
   };
 
   return (
-    <div className="overflow-hidden w-screen h-screen relative" onClick={handleClick}>
+    <div
+      className="overflow-hidden w-screen h-screen relative"
+      onClick={handleClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+
       <motion.div
         animate={{ x: `-${index * 100}vw` }}
         initial={false} // <-- prevents first load animation
@@ -46,9 +76,9 @@ export default function App() {
             ? { type: "tween", duration: 1.5, ease: [0.7, 0, 0.3, 1] }
             : { duration: 0 }
         }
-        className="flex w-[300vw] h-screen"
+        className="flex w-[200vw] h-screen relative z-10"
       >
-        <Left />
+        <Left shouldPlay={index === 0} />
         <Center
           shouldAnimate={shouldAnimate}
           onAnimationComplete={() => setShouldAnimate(false)}

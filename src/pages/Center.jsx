@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 import SplitText from '../components/SplitText';
-import Particles from '../components/ParticlesBackground';
+import Particles from '../components/ParticlesBackground'
 
 export default function Center({ shouldAnimate, onAnimationComplete }) {
   const foregroundColor = '#24324A';
@@ -46,7 +46,6 @@ export default function Center({ shouldAnimate, onAnimationComplete }) {
     <div className="w-screen h-screen relative overflow-hidden">
       <div className="absolute inset-0 bg-[#FFC62D] z-0" />
 
-      
       <Particles
         particleCount={260}
         particleSpread={15}
@@ -55,9 +54,8 @@ export default function Center({ shouldAnimate, onAnimationComplete }) {
         moveParticlesOnHover={false}
         alphaParticles={false}
         disableRotation={false}
-        className="absolute inset-0 z-[5]"
+        className="absolute inset-0 z-0 pointer-events-none"
       />
-
 
       <div
         className="absolute z-20"
