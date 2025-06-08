@@ -218,9 +218,6 @@
   .inline-block {
     display: inline-block;
   }
-  .table {
-    display: table;
-  }
   .h-screen {
     height: 100vh;
   }
@@ -337,6 +334,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #FFC62D;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  touch-action: auto;
+  display: block;
 }
 h1 {
   font-size: 3.2em;
