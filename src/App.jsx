@@ -11,23 +11,13 @@ export default function App() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
-    const navEntry = performance.getEntriesByType('navigation')[0];
-    if (navEntry?.type === 'reload') {
-      setShouldAnimate(true);
-    }
+    const navEntry = performance.getEntriesByType("navigation")[0];
+    const should = navEntry?.type === "reload" || navEntry?.type === "navigate";
+    const timeout = setTimeout(() => setShouldAnimate(should), 100);
+    return () => clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    const updateBodyBackground = () => {
-      if (index === 0 || index === 1) {
-        document.body.style.backgroundColor = "#FFC62D"; // yellow
-      } else if (index === 2) {
-        document.body.style.backgroundColor = "#24324A"; // dark for Right
-      }
-    };
 
-    updateBodyBackground();
-  }, [index]);
 
   useEffect(() => {
     setHasMounted(true);
