@@ -13,7 +13,7 @@ export default function FrameAnimation({
   const [frame, setFrame] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [floatStartTime, setFloatStartTime] = useState(null);
-  const [imageLoaded, setImageLoaded] = useState(false); 
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -21,16 +21,30 @@ export default function FrameAnimation({
   const startTimeRef = useRef(null);
   const finalYRef = useRef(null);
 
+  // ✅ Preload all images
   useEffect(() => {
-    console.log("Animation ready:", play, imageLoaded);
+    let loaded = 0;
+    for (let i = 0; i < frameCount; i++) {
+      const padded = String(i).padStart(6, "0");
+      const img = new Image();
+      img.src = `./frames/frame_${padded}.png`;
+      img.onload = () => {
+        loaded++;
+        console.log(`Preloaded frame ${i}`);
+        if (loaded === frameCount) {
+          setImagesLoaded(true);
+        }
+      };
+    }
+  }, [frameCount]);
 
-    if (!play || !imageLoaded) return; 
+  useEffect(() => {
+    if (!play || !imagesLoaded) return;
 
     setFrame(0);
     setElapsedTime(0);
     setFloatStartTime(null);
     finalYRef.current = null;
-
     startTimeRef.current = performance.now();
 
     timeoutRef.current = setTimeout(() => {
@@ -58,7 +72,7 @@ export default function FrameAnimation({
       clearInterval(intervalRef.current);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [play, fps, frameCount, delay, imageLoaded]); // include `imageLoaded`
+  }, [play, imagesLoaded, fps, frameCount, delay]);
 
   const padded = String(frame).padStart(6, "0");
   const src = `./frames/frame_${padded}.png`;
@@ -91,13 +105,14 @@ export default function FrameAnimation({
         transformOrigin: "center center",
       }}
     >
-      <img
-        src={src}
-        alt={`Frame ${frame}`}
-        onLoad={() => setImageLoaded(true)} // ⬅️ set preload flag
-        className="w-full h-full object-contain max-w-[100vw] max-h-[100vh]"
-        draggable={false}
-      />
+      {imagesLoaded && (
+        <img
+          src={src}
+          alt={`Frame ${frame}`}
+          className="w-full h-full object-contain max-w-[100vw] max-h-[100vh]"
+          draggable={false}
+        />
+      )}
     </div>
   );
 }
