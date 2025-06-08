@@ -1,39 +1,63 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import SplitText from '../components/SplitText';
-import { motion } from "framer-motion";
 
+import SplitText from '../components/SplitText';
+import Particles from '../components/ParticlesBackground';
 
 export default function Center({ shouldAnimate, onAnimationComplete }) {
   const foregroundColor = '#24324A';
   const foregroundRef = useRef(null);
 
   useEffect(() => {
-    if (!shouldAnimate) return;
+    if (!shouldAnimate || !foregroundRef.current) return;
 
-    const tl = gsap.timeline({
-      onComplete: () => onAnimationComplete?.(),
+    const el = foregroundRef.current;
+
+    // Start with a collapsed triangle
+    gsap.set(el, {
+      clipPath: 'polygon(100% 100%, 100% 100%, 100% 100%)',
+      xPercent: 100,
+      yPercent: 100,
     });
 
-    tl.fromTo(
-      foregroundRef.current,
-      { xPercent: 100, yPercent: 100 },
-      {
-        xPercent: 0,
-        yPercent: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-      }
-    );
+    const tl = gsap.timeline();
 
-    // Let SplitText handle its own timing, or optionally sync more tightly here
+    tl.to(el, {
+      xPercent: 0,
+      yPercent: 0,
+      duration: 0.6,
+      ease: 'power4.out',
+    });
+
+    tl.to(el, {
+      clipPath: 'polygon(100% 100%, 100% 0%, 0% 100%)',
+      duration: 0.8,
+      ease: 'power4.out',
+    }, '<');
 
     return () => tl.kill();
   }, [shouldAnimate]);
 
+
+
+
+
   return (
     <div className="w-screen h-screen relative overflow-hidden">
       <div className="absolute inset-0 bg-[#FFC62D] z-0" />
+
+      
+      <Particles
+        particleCount={260}
+        particleSpread={15}
+        speed={0.1}
+        particleBaseSize={500}
+        moveParticlesOnHover={false}
+        alphaParticles={false}
+        disableRotation={false}
+        className="absolute inset-0 z-[5]"
+      />
+
 
       <div
         className="absolute z-20"
@@ -57,9 +81,8 @@ export default function Center({ shouldAnimate, onAnimationComplete }) {
 
       <div
         ref={foregroundRef}
-        className="absolute inset-0 z-10"
+        className="absolute inset-0 z-10 triangle-mask"
         style={{
-          clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)',
           background: `linear-gradient(to top left, ${foregroundColor}, ${foregroundColor})`,
         }}
       />

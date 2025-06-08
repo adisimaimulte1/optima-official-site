@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 import Left from "./pages/Left";
 import Center from "./pages/Center";
-import Right from "./pages/Right";
 
 export default function App() {
   const [index, setIndex] = useState(1);
@@ -23,7 +22,7 @@ export default function App() {
     setHasMounted(true);
     const handleKey = (e) => {
       if (e.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowRight") setIndex((i) => Math.min(2, i + 1));
+      if (e.key === "ArrowRight") setIndex((i) => Math.min(1, i + 1));
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
@@ -34,7 +33,7 @@ export default function App() {
     const x = e.clientX;
     const w = window.innerWidth;
     if (x < w * 0.2) setIndex((i) => Math.max(0, i - 1));
-    else if (x > w * 0.8) setIndex((i) => Math.min(2, i + 1));
+    else if (x > w * 0.8) setIndex((i) => Math.min(1, i + 1));
   };
 
   return (
@@ -54,7 +53,6 @@ export default function App() {
           shouldAnimate={shouldAnimate}
           onAnimationComplete={() => setShouldAnimate(false)}
         />
-        <Right />
       </motion.div>
     </div>
   );
