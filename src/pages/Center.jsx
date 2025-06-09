@@ -112,7 +112,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
             fontFamily: 'Tusker',
             fontSize: 'clamp(1.2rem, 2vw, 1.8rem)',
             lineHeight: 1.4,
-            maxWidth: '45vw',
+            maxWidth: '44vw',
             paddingLeft: 'clamp(0.5rem, 1vw, 1rem)',
             wordBreak: 'break-word',
           }}
