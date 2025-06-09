@@ -6,12 +6,49 @@ import Center from "./pages/Center";
 
 import CountUpPercent from "./components/CountUpPercent";
 import Particles from "./components/ParticlesBackground";
+import { useMotionValue, animate } from "framer-motion";
+
+
 
 export default function App() {
   const [index, setIndex] = useState(1);
   const [hasMounted, setHasMounted] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+
+
+  
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const x = useMotionValue(0);
+  const [wasResized, setWasResized] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWasResized(true);
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  useEffect(() => {
+    if (wasResized) {
+      // Skip animation on resize
+      x.set(-index * windowWidth);
+      setWasResized(false); // reset flag
+    } else {
+      const controls = animate(x, -index * windowWidth, {
+        duration: 1.3,
+        ease: [0.7, 0, 0.3, 1],
+      });
+      return controls.stop;
+    }
+  }, [index, windowWidth]);
+
+
 
 
 
@@ -108,21 +145,15 @@ export default function App() {
 
 
       <motion.div
-        animate={{ x: `-${index * 100}vw` }}
-        initial={false} // <-- prevents first load animation
-        transition={
-          hasMounted
-            ? { type: "tween", duration: 1.5, ease: [0.7, 0, 0.3, 1] }
-            : { duration: 0 }
-        }
+        style={{ x }}
+        initial={false}
         className="flex w-[200vw] h-screen relative z-10"
       >
-        <Left shouldPlay={index === 0} />
-        <Center
-          shouldAnimate={shouldAnimate}
-          onAnimationComplete={() => setShouldAnimate(false)}
-        />
+        <Left shouldPlay={index === 0} scrollX={x} />
+        <Center shouldAnimate={shouldAnimate} scrollX={x} onAnimationComplete={() => setShouldAnimate(false)} />
       </motion.div>
+
+
     </div>
   );
 }
