@@ -7,7 +7,7 @@ import Particles from '../components/ParticlesBackground'
 
 export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) {
   // Parallax transforms for OPTIMA text and description text (different ranges for layered effect)
-  const halfWindowWidth = window.innerWidth * 0.42;
+  const halfWindowWidth = window.innerWidth / 2;
   const optimaParallaxX = useTransform(scrollX, [-window.innerWidth, 0], [0, halfWindowWidth]);
   const descriptionParallaxX = useTransform(scrollX, [-window.innerWidth, 0], [0, halfWindowWidth]);
 
@@ -65,6 +65,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
     return () => tl.kill();
   }, [shouldAnimate]);
 
+
   return (
     <div className="w-screen h-screen relative overflow-hidden">
       <div className="absolute inset-0 bg-[#FFC62D] z-0" />
@@ -111,7 +112,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
             fontFamily: 'Tusker',
             fontSize: 'clamp(1.2rem, 2vw, 1.8rem)',
             lineHeight: 1.4,
-            maxWidth: '50vw',
+            maxWidth: '45vw',
             paddingLeft: 'clamp(0.5rem, 1vw, 1rem)',
             wordBreak: 'break-word',
           }}
