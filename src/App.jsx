@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 import Left from "./pages/Left";
@@ -24,11 +24,18 @@ export default function App() {
   const x = useMotionValue(0);
   const [wasResized, setWasResized] = useState(false);
 
+  const prevWidth = useRef(window.innerWidth);
+
   useEffect(() => {
     const handleResize = () => {
-      setWasResized(true);
-      setWindowWidth(window.innerWidth);
+      const newWidth = window.innerWidth;
+      if (newWidth !== prevWidth.current) {
+        setWasResized(true);
+        setWindowWidth(newWidth);
+        prevWidth.current = newWidth;
+      }
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -152,6 +159,26 @@ export default function App() {
         <Left shouldPlay={index === 0} scrollX={x} />
         <Center shouldAnimate={shouldAnimate} scrollX={x} onAnimationComplete={() => setShouldAnimate(false)} />
       </motion.div>
+
+
+
+      {/* 🟣 Page Indicator Dots (put this AFTER motion.div) */}
+    <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-40">
+      <div
+        className={`w-3 h-3 rounded-full transition-all duration-1900 ${
+          index === 0
+            ? 'bg-[#24324A] scale-125' // Yellow on left
+            : 'bg-white opacity-50 scale-80'
+        }`}
+      />
+      <div
+        className={`w-3 h-3 rounded-full right-1/2 transition-all duration-1900 ${
+          index === 1
+            ? 'bg-[#FFC62D] scale-125' // Blue on center
+            : 'bg-white opacity-50 scale-80'
+        }`}
+      />
+    </div>
 
 
     </div>
