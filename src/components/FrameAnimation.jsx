@@ -6,7 +6,7 @@ export default function FrameAnimation({
   play = false,
   scale = 0.5,
   delay = 900,
-  startOffsetPx = 400,
+  startOffsetPx = 700,
   floatAmplitude = 30,
   floatFrequency = 0.4,
 }) {
@@ -30,7 +30,6 @@ export default function FrameAnimation({
       img.src = `./frames/frame_${padded}.png`;
       img.onload = () => {
         loaded++;
-        console.log(`Preloaded frame ${i}`);
         if (loaded === frameCount) {
           setImagesLoaded(true);
         }
@@ -103,15 +102,26 @@ export default function FrameAnimation({
       style={{
         transform: `scale(${scale}) translateY(${translateY}px)`,
         transformOrigin: "center center",
+        width: "100vw",
+        height: "100vh",
       }}
     >
       {imagesLoaded && (
-        <img
-          src={src}
-          alt={`Frame ${frame}`}
-          className="w-full h-full object-contain max-w-[100vw] max-h-[100vh]"
-          draggable={false}
-        />
+        <div
+          style={{
+            width: "min(100vw, 100vh)",
+            height: "min(100vw, 100vh)",
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
+          <img
+            src={src}
+            alt={`Frame ${frame}`}
+            className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] object-cover w-full h-full"
+            draggable={false}
+          />
+        </div>
       )}
     </div>
   );

@@ -4,10 +4,23 @@ import { motion } from "framer-motion";
 import Left from "./pages/Left";
 import Center from "./pages/Center";
 
+import CountUpPercent from "./components/CountUpPercent";
+import Particles from "./components/ParticlesBackground";
+
 export default function App() {
   const [index, setIndex] = useState(1);
   const [hasMounted, setHasMounted] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+
+  useEffect(() => {
+  const timeout = setTimeout(() => {
+    setIsLoading(false); // Hide loader after 2 seconds
+  }, 2000); // Adjust duration as needed
+  return () => clearTimeout(timeout);
+}, []);
 
 
 
@@ -34,11 +47,11 @@ export default function App() {
 
 
   useEffect(() => {
-    const navEntry = performance.getEntriesByType("navigation")[0];
-    const should = navEntry?.type === "reload" || navEntry?.type === "navigate";
-    const timeout = setTimeout(() => setShouldAnimate(should), 100);
-    return () => clearTimeout(timeout);
-  }, []);
+    if (!isLoading) {
+      setShouldAnimate(true);
+    }
+  }, [isLoading]);
+
 
 
 
@@ -67,6 +80,32 @@ export default function App() {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
+
+      
+      {isLoading && (
+        <div className="absolute inset-0 bg-[#FFC62D] z-50 overflow-hidden">
+          {/* Particles with z-0 */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <Particles
+              particleCount={260}
+              particleSpread={15}
+              speed={0.1}
+              particleBaseSize={500}
+              moveParticlesOnHover={false}
+              alphaParticles={false}
+              disableRotation={false}
+              className="w-full h-full"
+            />
+          </div>
+
+          {/* Counter with z-10 */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full">
+            <CountUpPercent from={0} to={100} duration={1} />
+          </div>
+        </div>
+      )}
+
+
 
       <motion.div
         animate={{ x: `-${index * 100}vw` }}

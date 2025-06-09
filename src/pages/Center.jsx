@@ -7,24 +7,32 @@ import Particles from '../components/ParticlesBackground'
 export default function Center({ shouldAnimate, onAnimationComplete }) {
   const foregroundColor = '#24324A';
   const foregroundRef = useRef(null);
+  const mottoRef = useRef(null);
+
 
   useEffect(() => {
-    if (!shouldAnimate || !foregroundRef.current) return;
+    if (!shouldAnimate || !foregroundRef.current || !mottoRef.current) return;
 
     const el = foregroundRef.current;
+    const motto = mottoRef.current;
 
-    // Start with a collapsed triangle
-    gsap.set(el, {
-      clipPath: 'polygon(100% 100%, 100% 100%, 100% 100%)',
+    // Start with both hidden
+    gsap.set([el, motto], {
       xPercent: 100,
       yPercent: 100,
+      opacity: 0,
+    });
+
+    gsap.set(el, {
+      clipPath: 'polygon(100% 100%, 100% 100%, 100% 100%)',
     });
 
     const tl = gsap.timeline();
 
-    tl.to(el, {
+    tl.to([el, motto], {
       xPercent: 0,
       yPercent: 0,
+      opacity: 1,
       duration: 0.6,
       ease: 'power4.out',
     });
@@ -37,6 +45,7 @@ export default function Center({ shouldAnimate, onAnimationComplete }) {
 
     return () => tl.kill();
   }, [shouldAnimate]);
+
 
 
 
@@ -84,6 +93,19 @@ export default function Center({ shouldAnimate, onAnimationComplete }) {
           background: `linear-gradient(to top left, ${foregroundColor}, ${foregroundColor})`,
         }}
       />
+
+      <div
+        ref={mottoRef}
+        className="absolute bottom-8 right-8 z-30"
+      >
+        <img
+          src="./assets/motto.png"
+          alt="Optimized Outreach. Maximum Success."
+          className="w-[clamp(10rem,25vw,30rem)] aspect-square object-contain"
+        />
+      </div>
+
+
     </div>
   );
 }
