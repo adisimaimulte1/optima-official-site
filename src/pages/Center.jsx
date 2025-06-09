@@ -136,7 +136,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
         ref={mottoRef}
         className="absolute bottom-0 right-0 z-30"
         style={{
-          padding: 'clamp(1rem, 9vw, 9rem)',
+          padding: 'clamp(1rem, calc(4vh + 4vw), 9rem)',
         }}
       >
         <img
