@@ -109,7 +109,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
           style={{
             x: descriptionParallaxX,
             fontFamily: 'Tusker',
-            fontSize: 'clamp(1.5rem, 2vw, 1.8rem)',
+            fontSize: 'clamp(1.2rem, 2vw, 1.8rem)',
             lineHeight: 1.4,
             maxWidth: '50vw',
             paddingLeft: 'clamp(0.5rem, 2vw, 1rem)',
@@ -144,9 +144,9 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
           alt="Optimized Outreach. Maximum Success."
           className="aspect-square object-contain"
           style={{
-            width: 'clamp(18rem, 25vw, 30rem)',
-            minWidth: '18rem',
-            minHeight: '18rem',
+            width: 'clamp(15rem, 25vw, 30rem)',
+            minWidth: '15rem',
+            minHeight: '15rem',
           }}
         />
       </div>
