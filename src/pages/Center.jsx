@@ -112,8 +112,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
             fontSize: 'clamp(1.2rem, 2vw, 1.8rem)',
             lineHeight: 1.4,
             maxWidth: '50vw',
-            paddingLeft: 'clamp(0.5rem, 2vw, 1rem)',
-            paddingTop: 'clamp(0.4rem, 1.2vh, 1rem)',
+            paddingLeft: 'clamp(0.5rem, 1vw, 1rem)',
             wordBreak: 'break-word',
           }}
         >
@@ -136,7 +135,7 @@ export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) 
         ref={mottoRef}
         className="absolute bottom-0 right-0 z-30"
         style={{
-          padding: 'clamp(1rem, calc(4vh + 4vw), 9rem)',
+          padding: 'clamp(1rem, calc(3vh + 3vw), 9rem)',
         }}
       >
         <img
