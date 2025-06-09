@@ -7,7 +7,7 @@ import Particles from '../components/ParticlesBackground'
 
 export default function Center({ shouldAnimate, onAnimationComplete, scrollX }) {
   // Parallax transforms for OPTIMA text and description text (different ranges for layered effect)
-  const halfWindowWidth = window.innerWidth / 2;
+  const halfWindowWidth = window.innerWidth * 0.42;
   const optimaParallaxX = useTransform(scrollX, [-window.innerWidth, 0], [0, halfWindowWidth]);
   const descriptionParallaxX = useTransform(scrollX, [-window.innerWidth, 0], [0, halfWindowWidth]);
 
