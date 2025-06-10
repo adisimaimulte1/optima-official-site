@@ -4,7 +4,7 @@ import MainApp from "./MainApp";
 
 export default function App() {
   return (
-    <Router basename="/optima-presentation-site">
+    <Router basename="/optima-official-site">
       <Routes>
         <Route path="/verify" element={<EmailVerifyPage />} />
         <Route path="/*" element={<MainApp />} />

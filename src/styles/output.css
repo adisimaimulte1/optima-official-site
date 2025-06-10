@@ -912,4 +912,9 @@ h1 {
       --tw-drop-shadow: initial;
       --tw-drop-shadow-color: initial;
       --tw-drop-shadow-alpha: 100%;
-      --tw-drop-shadow-
+      --tw-drop-shadow-size: initial;
+      --tw-duration: initial;
+      --tw-ease: initial;
+    }
+  }
+}
