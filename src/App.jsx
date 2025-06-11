@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 
 import Left from "./pages/Left";
 import Center from "./pages/Center";
-import EmailVerifyPage from "./pages/EmailVerifyPage";
 
+import EmailVerifyPage from "./pages/EmailVerifyPage";
+import PasswordResetPage from "./pages/PasswordResetPage";
 
 import CountUpPercent from "./components/CountUpPercent";
 import Particles from "./components/ParticlesBackground";
@@ -23,6 +24,10 @@ export default function MainApp() {
   if (isEmailVerification) {
     return <EmailVerifyPage />;
   }
+  else if (mode === "resetPassword") {
+    return <PasswordResetPage />;
+  }
+
 
 
 

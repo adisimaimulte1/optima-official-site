@@ -21,7 +21,7 @@ export default function EmailVerifyPage() {
   useEffect(() => {
     const updateScale = () => {
       const height = window.innerHeight;
-      const baseHeight = 900; // scale reference
+      const baseHeight = 900;
       const newScale = Math.min(1, height / baseHeight);
       setScale(newScale);
     };
@@ -82,7 +82,7 @@ export default function EmailVerifyPage() {
           <img
             src="./assets/logo_foreground.png"
             alt="Optima Logo"
-            className="w-80 h-80 mb-20"
+            className="w-60 h-60 mb-20"
           />
 
           {status === "verified" ? (
