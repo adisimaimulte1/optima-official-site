@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import Particles from "../components/ParticlesBackground";
-
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
-// Firebase init (skip if already initialized globally)
 const firebaseConfig = {
   apiKey: "AIzaSyB_dh_-ZW4Tt9do13GNhXv-BR6_2Y8bIGA",
   authDomain: "optima-78874.firebaseapp.com",
@@ -18,6 +16,20 @@ if (!firebase.apps.length) {
 
 export default function EmailVerifyPage() {
   const [status, setStatus] = useState("checking");
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const updateScale = () => {
+      const height = window.innerHeight;
+      const baseHeight = 900; // scale reference
+      const newScale = Math.min(1, height / baseHeight);
+      setScale(newScale);
+    };
+
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -46,7 +58,7 @@ export default function EmailVerifyPage() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#FFC62D] text-[#24324A]">
-      {/* Background particles */}
+      {/* Background Particles */}
       <Particles
         particleCount={260}
         particleSpread={15}
@@ -58,36 +70,38 @@ export default function EmailVerifyPage() {
         className="absolute inset-0 z-0 pointer-events-none"
       />
 
-      {/* Text content on top */}
-      <div 
-      className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-8"
-      style={{ fontFamily: "Tusker" }}
+      {/* Centered Scaling Content */}
+      <div
+        className="absolute inset-0 z-10 flex items-center justify-center"
+        style={{ fontFamily: "Tusker" }}
       >
-        {/* Logo image */}
-        <img
-          src="./assets/logo_foreground.png"
-          alt="Optima Logo"
-          className="w-80 h-80 mb-20" // Adjust size and spacing
-        />
+        <div
+          className="flex flex-col items-center text-center transition-transform duration-300"
+          style={{ transform: `scale(${scale})` }}
+        >
+          <img
+            src="./assets/logo_foreground.png"
+            alt="Optima Logo"
+            className="w-80 h-80 mb-20"
+          />
 
-        {status === "verified" ? (
-          <>
-            <h1 className="text-5xl font-bold mb-4">Verification Succeeded</h1>
-            <p className="text-lg max-w-md">
-              Your account has been confirmed. You can close the window and get back to the app.
-            </p>
-          </>
-        ) : (
-          <>
-            <h1 className="text-4xl font-bold mb-4 text-red-700">Verification Failed</h1>
-            <p 
-            className="text-lg max-w-md">
-              Link-ul este invalid sau a expirat. Verifică din nou emailul sau contactează suportul.
-            </p>
-          </>
-        )}
+          {status === "verified" ? (
+            <>
+              <h1 className="text-5xl font-bold mb-4">Verification Succeeded</h1>
+              <p className="text-lg max-w-md">
+                Your account has been confirmed. You can close the window and get back to the app.
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-4xl font-bold mb-4 text-red-700">Verification Failed</h1>
+              <p className="text-lg max-w-md">
+                Link-ul este invalid sau a expirat. Verifică din nou emailul sau contactează suportul.
+              </p>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
 }
-
