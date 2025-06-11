@@ -96,7 +96,7 @@ export default function EmailVerifyPage() {
             <>
               <h1 className="text-4xl font-bold mb-4 text-red-700">Verification Failed</h1>
               <p className="text-lg max-w-md">
-                Link-ul este invalid sau a expirat. Verifică din nou emailul sau contactează suportul.
+                The link is invalid or expired. Check your email again or contact the support team.
               </p>
             </>
           )}

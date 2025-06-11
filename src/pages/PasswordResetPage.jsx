@@ -30,7 +30,7 @@ export default function PasswordResetPage() {
     if (mode === "resetPassword" && code) {
       setOobCode(code);
     } else {
-      setMessage("❌ Invalid or expired reset link.");
+      setMessage("Invalid or expired reset link.");
     }
 
     const updateScale = () => {
@@ -47,18 +47,18 @@ export default function PasswordResetPage() {
   const handleReset = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      setMessage("❌ Parolele nu coincid.");
+      setMessage("Passwords don't match.");
       return;
     }
     try {
       await firebase.auth().confirmPasswordReset(oobCode, newPassword);
-      setMessage("✅ Parola a fost resetată cu succes. Te poți autentifica cu noua parolă.");
+      setMessage("The password was reset successfully. You can now login with your new password.");
       setTimeout(() => {
         window.location.href = "https://optima-78874.firebaseapp.com/login";
       }, 4000);
     } catch (error) {
       console.error("Password reset failed:", error);
-      setMessage("❌ Eroare la resetarea parolei: " + error.message);
+      setMessage("Password reset failed: " + error.message);
     }
   };
 
@@ -88,14 +88,14 @@ export default function PasswordResetPage() {
             alt="Optima Logo"
             className="w-60 h-60 mb-4"
           />
-          <h1 className="text-4xl font-bold">Resetează-ți parola</h1>
-          <p className="text-lg">Setează o parolă nouă pentru contul tău.</p>
+          <h1 className="text-4xl font-bold">Reset your password</h1>
+          <p className="text-lg">Set a new password for your account.</p>
 
           {oobCode && (
             <form onSubmit={handleReset} className="flex flex-col gap-4 w-full">
               <input
                 type="password"
-                placeholder="Parolă nouă"
+                placeholder="new password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
@@ -103,7 +103,7 @@ export default function PasswordResetPage() {
               />
               <input
                 type="password"
-                placeholder="Confirmă parola"
+                placeholder="confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -113,7 +113,7 @@ export default function PasswordResetPage() {
                 type="submit"
                 className="bg-[#24324A] text-[#FFC62D] font-bold py-2 px-4 rounded hover:opacity-90"
               >
-                Resetează parola
+                Submit
               </button>
             </form>
           )}
