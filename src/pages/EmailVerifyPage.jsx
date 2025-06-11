@@ -17,7 +17,7 @@ if (!firebase.apps.length) {
 }
 
 export default function EmailVerifyPage() {
-  const [status, setStatus] = useState("checking"); // "verified", "failed"
+  const [status, setStatus] = useState("checking");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -45,9 +45,8 @@ export default function EmailVerifyPage() {
   if (status === "checking") return null;
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-[#24324A] p-8 text-center">
-      <div className="absolute inset-0 bg-[#FFC62D] z-0" />
-
+    <div className="relative w-screen h-screen overflow-hidden bg-[#FFC62D] text-[#24324A]">
+      {/* Background particles */}
       <Particles
         particleCount={260}
         particleSpread={15}
@@ -59,23 +58,36 @@ export default function EmailVerifyPage() {
         className="absolute inset-0 z-0 pointer-events-none"
       />
 
-      <div className="relative z-10">
-            {status === "verified" ? (
-            <>
-                <h1 className="text-4xl font-bold mb-4">Verification Succeeded</h1>
-                <p className="text-lg max-w-md">
-                Your account has been confirmed. You can close the window and get back to the app.
-                </p>
-            </>
-            ) : (
-            <>
-                <h1 className="text-4xl font-bold mb-4 text-red-700">Verification Failed</h1>
-                <p className="text-lg max-w-md">
-                Link-ul este invalid sau a expirat. Verifică din nou emailul sau contactează suportul.
-                </p>
-            </>
-            )}
-        </div>
+      {/* Text content on top */}
+      <div 
+      className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-8"
+      style={{ fontFamily: "Tusker" }}
+      >
+        {/* Logo image */}
+        <img
+          src="./assets/logo_foreground.png"
+          alt="Optima Logo"
+          className="w-80 h-80 mb-20" // Adjust size and spacing
+        />
+
+        {status === "verified" ? (
+          <>
+            <h1 className="text-5xl font-bold mb-4">Verification Succeeded</h1>
+            <p className="text-lg max-w-md">
+              Your account has been confirmed. You can close the window and get back to the app.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-4xl font-bold mb-4 text-red-700">Verification Failed</h1>
+            <p 
+            className="text-lg max-w-md">
+              Link-ul este invalid sau a expirat. Verifică din nou emailul sau contactează suportul.
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }
+
