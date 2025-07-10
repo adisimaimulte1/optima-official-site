@@ -163,7 +163,7 @@ export default function Left({ shouldPlay }) {
         >
           <Magnet id="android" padding={magnetPadding} magnetStrength={magnetStrength}>
             <a
-              href="https://drive.google.com/file/d/1N2h3j1x9VOR028AQONi_SdNpdx-0lgY2/view?usp=drive_link"
+              href="https://drive.google.com/file/d/19XIDUm92o7wYoYFuu9OfphqHiJPfW_hW/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#24324A] text-[#FFC62D] rounded-2xl shadow-xl hover:scale-105 transition-transform"
@@ -179,7 +179,7 @@ export default function Left({ shouldPlay }) {
 
           <Magnet id="ios" padding={magnetPadding} magnetStrength={magnetStrength}>
             <a
-              href="https://apps.apple.com/app/id000000000"
+              href="https://github.com/adisimaimulte1/optima-outreach-app?tab=readme-ov-file#platform-support"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#24324A] text-[#FFC62D] rounded-2xl shadow-xl hover:scale-105 transition-transform"
